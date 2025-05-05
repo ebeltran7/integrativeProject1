@@ -165,21 +165,31 @@ public class frmlogin extends javax.swing.JFrame {
 
     private void botonIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIniciarSesionActionPerformed
         // TODO add your handling code here:
-        String correoIngresado = txtusuario.getText();
-    String contrasenaIngresada = new String(txtcontraseña.getPassword());
-
-    boolean accesoConcedido = false;
-    Usuario usuarioEncontrado = null;
-
-    for (Usuario u : datosUsuario.obtenerUsuario()) {
-        if (correoIngresado.isEmpty() || contrasenaIngresada.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingresa todos los campos", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
-        return;
+        String correo = txtusuario.getText();
+        String contraseña = new String(txtcontraseña.getPassword());
+        
+        //Deben de validar campos vacios.
+        if (correo.isEmpty()|| contraseña.isEmpty()) {
+            JOptionPane.showMessageDialog( this, "Ingrese correo y contraseña", "error", JOptionPane.ERROR_MESSAGE);
+                return;
         }
-    
-    }
- 
-
+        //Buscamos Usuario en datosUsuario
+        Usuario usuarioEncontrado = null;
+        for (Usuario u: datosUsuario.obtenerUsuario()){
+            if (u.getCorreo().equals(correo)){
+                usuarioEncontrado = u;
+                break;
+            }
+        }
+        
+        //validaremos contraseña y abrir la class frmroles
+        if (usuarioEncontrado != null && usuarioEncontrado.getContrasena().equals(contraseña)){
+            JOptionPane.showMessageDialog(this, "Bienvenido, " + usuarioEncontrado.getNombre() + " !");
+            new frmroles(usuarioEncontrado.getRol()).setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Correo o Contraseña incorrectos", " Error" , JOptionPane.ERROR_MESSAGE);
+        }
     
     }//GEN-LAST:event_botonIniciarSesionActionPerformed
     

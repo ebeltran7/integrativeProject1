@@ -19,6 +19,7 @@ public class datosUsuario {
         lista.add(new Usuario("2", "Leo", "lleiva@udi.edu.co", "abcd", "profesor" ));
         lista.add(new Usuario("2", "Ana", "ana@correo.com", "abcd", "profesor"));
         lista.add(new Usuario("3", "Carlos", "carlos@correo.com", "admin", "administrativo"));
+        lista.add(new Usuario("4", "Juan Fernado", "jramirez@udi.edu.co", "123456" ,"estudiante"));
         return lista;
     }
         private static ArrayList<Usuario> listaUsuario = new ArrayList<>();

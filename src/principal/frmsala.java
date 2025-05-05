@@ -9,6 +9,15 @@ package principal;
  * @author NeyBg
  */
 public class frmsala extends javax.swing.JFrame {
+    private String rolUsuario; // Variable para almacenar el rol
+
+        // Constructor modificado
+    public frmsala(String rolUsuario) {
+        this.rolUsuario = rolUsuario; // Guardamos el rol
+        initComponents();
+        setLocationRelativeTo(null); // Centrar ventana
+    }
+    
 
     /**
      * Creates new form frmsala
@@ -75,6 +84,11 @@ public class frmsala extends javax.swing.JFrame {
         botonatras.setBackground(new java.awt.Color(0, 102, 153));
         botonatras.setForeground(new java.awt.Color(255, 255, 255));
         botonatras.setText("Atras");
+        botonatras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonatrasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -141,6 +155,14 @@ public class frmsala extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonatrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonatrasActionPerformed
+        // TODO add your handling code here:
+    botonatras.addActionListener(e -> {
+        new frmroles(rolUsuario).setVisible(true); // Pasa el rol nuevamente
+        this.dispose();
+    });    
+    }//GEN-LAST:event_botonatrasActionPerformed
 
     /**
      * @param args the command line arguments

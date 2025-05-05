@@ -36,7 +36,7 @@ public class frmroles extends javax.swing.JFrame {
         setLocationRelativeTo(null); //centrar ventana
     }
     
-    private void configurarPermisosBasicos(){
+    private void configurarPermisosBasicos(){ 
         //Deshabilitar todo primero
         botonReservaSala.setEnabled(false);
         botonPrestamoEquipo.setEnabled(false);
@@ -49,7 +49,7 @@ public class frmroles extends javax.swing.JFrame {
             botonReservaSala.setToolTipText("solo para profesores y administrativos pueden reservar salas");
              
         }
-        else if(rolUsuario.equalsIgnoreCase("administrativo")|| rolUsuario.equalsIgnoreCase("administrativo")){
+        else if(rolUsuario.equalsIgnoreCase("profesor")|| rolUsuario.equalsIgnoreCase("administrativo")){
             botonReservaSala.setEnabled(true);
             botonPrestamoEquipo.setEnabled(true);
             botonHistorial.setEnabled(true); // que vean su historial
@@ -211,11 +211,21 @@ public class frmroles extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonPrestamoEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPrestamoEquipoActionPerformed
-        // TODO add your handling code here:
+            // TODO add your handling code here:
+        botonPrestamoEquipo.addActionListener(e -> {
+            new frmequipo().setVisible(true);
+            this.dispose(); //cierra la venta actual
+        });
     }//GEN-LAST:event_botonPrestamoEquipoActionPerformed
 
     private void botonReservaSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReservaSalaActionPerformed
         // TODO add your handling code here:
+        botonReservaSala.addActionListener(e -> {
+            if (!rolUsuario.equalsIgnoreCase("estudiante")) {
+                new frmsala(rolUsuario).setVisible(true);
+                this.dispose();
+            }
+        });
     }//GEN-LAST:event_botonReservaSalaActionPerformed
 
     // En el constructor o initComponents():
