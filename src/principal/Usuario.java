@@ -9,8 +9,9 @@ package principal;
  * @author NeyBg
  */
 public class Usuario {
-    private String id;
+    private int id;
     private String nombre;
+    private String apellido;
     private String correo;
     private String contrasena;
     private String rol; // rol le llamamos al estudiante, al profesor o el administrativo.
@@ -19,9 +20,10 @@ public class Usuario {
     
     }
     //Metodo constructor
-    public Usuario(String id, String nombre, String correo, String contrasena, String rol){
+    public Usuario(int id, String nombre,String apellido, String correo, String contrasena, String rol){
         this.id = id;
         this.nombre = nombre;
+        this.apellido = apellido;
         this.correo = correo;
         this.contrasena = contrasena;
         this.rol = rol;
@@ -29,7 +31,7 @@ public class Usuario {
     }
     
     //geters 
-    public String getId(){
+    public int getId(){
         return id;
     }
     
@@ -37,31 +39,44 @@ public class Usuario {
         return nombre;
     }
     
-        public String getCorreo(){
+    public String getApellido() {
+        return apellido;
+    }
+            
+    public String getCorreo(){
         return correo;
     }
-        public String getContrasena(){
+    public String getContrasena(){
         return contrasena;
     }
-            public String getRol(){
+
+
+    public String getRol(){
         return rol;
     }
             
     //setters
-    public void setId(String id) {
+            
+    public void setId(int id) {
         this.id = id;
     }
-        public void setNombre(String nombre) {
+    
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-        public void setCorreo(String correo) {
-        this.correo = correo;
-        
+    
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }        
+    public void setCorreo(String correo) {
+        this.correo = correo;     
     }     
-        public void setContrasena(String contrasena) {
+        
+    public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
-        public void setRol(String rol) {
+        
+    public void setRol(String rol) {
         this.rol = rol;
     }
     

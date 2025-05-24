@@ -40,7 +40,7 @@ public class usuarioDAO {
     }
 
     // Método para conectar
-public void conectar() {
+    public void conectar() {
     try {
         Class.forName("oracle.jdbc.driver.OracleDriver");
         System.out.println("=== Intentando conexión ===");
@@ -60,6 +60,8 @@ public void conectar() {
             "Error Oracle", JOptionPane.ERROR_MESSAGE);
     }
 }
+
+
 
     // Método para cerrar conexión
     public void cerrarConexion() {
@@ -91,9 +93,10 @@ public void conectar() {
 
             if (rs.next()) {
                 return new Usuario(
+                    rs.getInt("ID_USUARIO"),
                     rs.getString("NOMBRE"),
-                    "", // apellido (si lo necesitas)
-                    rs.getString("CORREO"),
+                    rs.getString("Apellido"),
+                    rs.getString("CORREO"),       
                     "", // contraseña (no es necesario devolverla)
                     rs.getString("ROL")
                 );
@@ -136,6 +139,33 @@ public void conectar() {
             }
         }
     }
+
+    public boolean crearUsuario(Usuario usuario) {
+    PreparedStatement stmt = null;
+    try {
+        if (this.conexion == null || this.conexion.isClosed()) {
+            this.conectar();
+        }
+        String sql = "INSERT INTO usuario (id_usuario, nombre, apellido, correo, rol, contrasena) VALUES (usuario_seq.NEXTVAL, ?, ?, ?, ?, ?)";
+        stmt = this.conexion.prepareStatement(sql);
+        stmt.setString(1, usuario.getNombre());
+        stmt.setString(2, usuario.getApellido());
+        stmt.setString(3, usuario.getCorreo());
+        stmt.setString(4, usuario.getRol());
+        stmt.setString(5, usuario.getContrasena());
+        int filas = stmt.executeUpdate();
+        return filas > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    } finally {
+        try {
+            if (stmt != null) stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
 
     // Getters y Setters
     public String getUrl() {

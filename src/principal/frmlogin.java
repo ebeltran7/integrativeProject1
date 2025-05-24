@@ -264,3 +264,24 @@ public class frmlogin extends javax.swing.JFrame {
     private javax.swing.JTextField txtusuario;
     // End of variables declaration//GEN-END:variables
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
