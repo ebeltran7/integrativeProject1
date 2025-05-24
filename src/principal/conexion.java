@@ -12,9 +12,10 @@ import java.sql.SQLException;
  * @author NeyBg
  */
 public class conexion {
-    private static final String URL = "jdbc:oracle:thin:@192.168.254.215:1521:orcl"; // Cambia a tu puerto y SID
-    private static final String USER = "pruebados"; // Cambia según tu usuario Oracle
-    private static final String PASSWORD = "pruebados"; // Cambia según tu clave
+    //private static final String URL = "jdbc:oracle:thin:@192.168.254.215:1521:orcl"; // Cambia a tu puerto y SID
+    private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+    private static final String USER = "prueba2"; // Cambia según tu usuario Oracle
+    private static final String PASSWORD = "prueba2"; // Cambia según tu clave
     
    /**
      * Establece y retorna una conexión con la base de datos Oracle.

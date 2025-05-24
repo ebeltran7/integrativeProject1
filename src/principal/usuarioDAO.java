@@ -14,9 +14,17 @@ import javax.swing.JOptionPane;
 import principal.conexion;
 
 public class usuarioDAO {
-    private String url = "jdbc:oracle:thin:@192.168.254.215:1521:orcl"; 
-    private String usuario = "usuario";
-    private String contrasena = "contrasena";
+    //private String url = "jdbc:oracle:thin:@192.168.254.215:1521:orcl"; 
+    // Configuración para universidad
+    //private String url = "jdbc:oracle:thin:@192.168.254.215:1521:orcl";
+    //private String usuario = "usuario_universidad";
+    //private String contrasena = "contrasena_universidad";
+
+    // Configuración para trabajo local
+    private String url = "jdbc:oracle:thin:@localhost:1521:XE";
+    private String usuario = "prueba2";
+    private String contrasena = "prueba2";
+
     private Connection conexion;
     
     // Constructor por defecto
@@ -102,7 +110,33 @@ public void conectar() {
                 e.printStackTrace();
             }
         }
-}
+    }
+    public boolean solicitarCambioClave(int idUsuario, String nuevaContrasena) {
+        PreparedStatement stmt = null;
+        try {
+            if (this.conexion == null || this.conexion.isClosed()) {
+                this.conectar();  // Asegura conexión activa
+            }
+
+            String sql = "UPDATE usuario SET solicitud_cambio_contra = 1, nueva_contrasena = ? WHERE id_usuario = ?";
+            stmt = this.conexion.prepareStatement(sql);
+            stmt.setString(1, nuevaContrasena);
+            stmt.setInt(2, idUsuario);
+
+            int filas = stmt.executeUpdate();
+            return filas > 0;  // Retorna true si actualizó alguna fila
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     // Getters y Setters
     public String getUrl() {
         return url;

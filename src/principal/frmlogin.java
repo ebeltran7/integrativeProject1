@@ -176,7 +176,9 @@ public class frmlogin extends javax.swing.JFrame {
         //
         //Buscamos Usuario en datosUsuario
             // Autenticación con base de datos usando UsuarioDAO
-        usuarioDAO dao = new usuarioDAO("jdbc:oracle:thin:@192.168.254.215:1521:orcl", "pruebados", "pruebados");
+            //este siguiente comentaro es la conexion en la universidad
+        //usuarioDAO dao = new usuarioDAO("jdbc:oracle:thin:@192.168.254.215:1521:orcl", "pruebados", "pruebados");
+        usuarioDAO dao = new usuarioDAO("jdbc:oracle:thin:@localhost:1521:XE", "prueba2", "prueba2");
         Usuario usuario = dao.autenticar(correo, contraseña);
 
         if (usuario != null) {
