@@ -6,6 +6,7 @@ package principal;
 
 import javax.swing.table.DefaultTableModel;
 import principal.frmCrearUsuario;
+import javax.swing.JOptionPane;
 /**
  *
  * @author NeyBg
@@ -18,14 +19,34 @@ public class frmAdministrador extends javax.swing.JFrame {
      */
     public frmAdministrador() {
         initComponents();
+        this.setLocationRelativeTo(null);  // Centrar ventana
+        
+        botonDeshabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonDeshabilitarActionPerformed(evt);
+            }
+        });
+        
+        botonHabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonHabilitarActionPerformed(evt);
+            }
+        });
+        
         inicializarModeloTabla();
         cargarUsuarios();
     }
+    
+    
     private void inicializarModeloTabla() {
-        String[] columnas = {"ID Usuario", "Nombre", "Correo", "Rol", };
+        String[] columnas = {"ID Usuario", "Nombre", "Correo", "Rol", "Estado" };
         modeloUsuarios = new DefaultTableModel(null, columnas);
         tblUsuarios.setModel(modeloUsuarios);
     }
+    
+ /**
+ * Carga los usuarios desde la base de datos y los muestra en la tabla.
+ */
     private void cargarUsuarios() {
         usuarioDAO dao = new usuarioDAO();
         modeloUsuarios.setRowCount(0); // limpia la tabla
@@ -34,19 +55,20 @@ public class frmAdministrador extends javax.swing.JFrame {
             if (dao.getConexion() == null || dao.getConexion().isClosed()) {
                 dao.conectar();
             }
-
-            String sql = "SELECT ID_USUARIO, NOMBRE, CORREO, ROL " +
-                         "FROM USUARIO";
+            // Consulta con la columna ESTADO
+            String sql = "SELECT ID_USUARIO, NOMBRE, CORREO, ROL, ESTADO FROM USUARIO ORDER BY ID_USUARIO";
+;
 
             java.sql.PreparedStatement ps = dao.getConexion().prepareStatement(sql);
             java.sql.ResultSet rs = ps.executeQuery();
-
+            //El array tiene tamaño 4, llenas las posiciones 0 a 3.
             while (rs.next()) {
                 Object[] fila = new Object[5];
                 fila[0] = rs.getInt("ID_USUARIO");
                 fila[1] = rs.getString("NOMBRE");
                 fila[2] = rs.getString("CORREO");
                 fila[3] = rs.getString("ROL");
+                fila[4] = rs.getInt("ESTADO") == 1 ? "Habilitado" : "Deshabilitado";
                 modeloUsuarios.addRow(fila);
             }
             rs.close();
@@ -57,7 +79,30 @@ public class frmAdministrador extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar usuarios: " + e.getMessage());
         }
     }
+    
+    
+    private Usuario obtenerUsuarioSeleccionado() {
+        int fila = tblUsuarios.getSelectedRow();
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Seleccione un usuario para modificar.", "Advertencia", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
 
+        Usuario usuario = new Usuario();
+        usuario.setId((Integer) modeloUsuarios.getValueAt(fila, 0));
+        usuario.setNombre((String) modeloUsuarios.getValueAt(fila, 1));
+        usuario.setCorreo((String) modeloUsuarios.getValueAt(fila, 2));
+        usuario.setRol((String) modeloUsuarios.getValueAt(fila, 3));
+  
+
+    return usuario;
+}
+
+
+
+
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,13 +139,15 @@ public class frmAdministrador extends javax.swing.JFrame {
         tblUsuarios.setForeground(new java.awt.Color(255, 255, 255));
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID Usuario", "Nombre", "Correo", "Rol"
+                "ID Usuario", "Nombre", "Apellido", "Correo", "Rol", "Estado"
             }
         ));
         jScrollPane1.setViewportView(tblUsuarios);
@@ -124,23 +171,38 @@ public class frmAdministrador extends javax.swing.JFrame {
         botonDeshabilitar.setForeground(new java.awt.Color(0, 102, 153));
         botonDeshabilitar.setText("Deshabilitar");
         botonDeshabilitar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonDeshabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonDeshabilitarActionPerformed(evt);
+            }
+        });
 
         botonHabilitar.setBackground(new java.awt.Color(255, 153, 51));
         botonHabilitar.setForeground(new java.awt.Color(0, 102, 153));
         botonHabilitar.setText("Habilitar");
         botonHabilitar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonHabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonHabilitarActionPerformed(evt);
+            }
+        });
 
         botonModificar.setBackground(new java.awt.Color(255, 153, 51));
         botonModificar.setForeground(new java.awt.Color(0, 102, 153));
         botonModificar.setText("Modificar");
         botonModificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -148,7 +210,7 @@ public class frmAdministrador extends javax.swing.JFrame {
                     .addComponent(botonDeshabilitar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonHabilitar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,6 +261,60 @@ public class frmAdministrador extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_botonCrearActionPerformed
+
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+        // TODO add your handling code here:
+        
+        Usuario usuarioSeleccionado = obtenerUsuarioSeleccionado();
+        if (usuarioSeleccionado == null) {
+            return; // No hay selección, salir
+        }
+
+        frmCrearUsuario dialog = new frmCrearUsuario(this, true);
+        dialog.cargarUsuario(usuarioSeleccionado);  // Método que debes crear en frmCrearUsuario
+        dialog.setModoEdicion(true);                 // Método para activar modo edición
+        dialog.setVisible(true);
+
+        if (dialog.isGuardado()) {
+            cargarUsuarios();  // Recarga la tabla para mostrar cambios
+        }
+            
+    }//GEN-LAST:event_botonModificarActionPerformed
+
+    // Evento para deshabilitar usuario seleccionado
+    private void botonHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonHabilitarActionPerformed
+        Usuario usuarioSeleccionado = obtenerUsuarioSeleccionado();
+        if (usuarioSeleccionado == null) {
+            return; // No hay usuario seleccionado
+        }
+
+        usuarioDAO dao = new usuarioDAO();
+        boolean exito = dao.actualizarEstadoUsuario(usuarioSeleccionado.getId(), 1); // 1 = habilitado
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "Usuario habilitado correctamente.");
+            cargarUsuarios();  // Refresca tabla
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al habilitar usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_botonHabilitarActionPerformed
+
+    private void botonDeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDeshabilitarActionPerformed
+        Usuario usuarioSeleccionado = obtenerUsuarioSeleccionado();
+        if (usuarioSeleccionado == null) {
+            return; // No hay usuario seleccionado
+        }
+
+        usuarioDAO dao = new usuarioDAO();
+        boolean exito = dao.actualizarEstadoUsuario(usuarioSeleccionado.getId(), 0); // 0 = deshabilitado
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "Usuario deshabilitado correctamente.");
+            cargarUsuarios();  // Refresca tabla
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al deshabilitar usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+        }    
+    }//GEN-LAST:event_botonDeshabilitarActionPerformed
 
     /**
      * @param args the command line arguments

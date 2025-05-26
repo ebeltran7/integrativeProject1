@@ -84,7 +84,7 @@ public class usuarioDAO {
                 this.conectar(); // Asegura que hay conexión
             }
 
-            String sql = "SELECT NOMBRE, CORREO, ROL FROM USUARIO WHERE CORREO = ? AND CONTRASENA = ?";
+            String sql = "SELECT ID_USUARIO, NOMBRE, APELLIDO, CORREO, ROL FROM USUARIO WHERE CORREO = ? AND CONTRASENA = ?";
             stmt = this.conexion.prepareStatement(sql);
             stmt.setString(1, correo);
             stmt.setString(2, contraseña);
@@ -92,10 +92,12 @@ public class usuarioDAO {
             rs = stmt.executeQuery();
 
             if (rs.next()) {
+                //AGREGO UN PRINTLN PARA ASEGURARME SI USUARIO ES RETORNADO esto cuando funcione el codigo se dede de quitar
+                System.out.println("Usuario encontrado: " + rs.getString("NOMBRE") + " " + rs.getString("APELLIDO"));
                 return new Usuario(
                     rs.getInt("ID_USUARIO"),
                     rs.getString("NOMBRE"),
-                    rs.getString("Apellido"),
+                    rs.getString("APELLIDO"),
                     rs.getString("CORREO"),       
                     "", // contraseña (no es necesario devolverla)
                     rs.getString("ROL")
@@ -166,6 +168,69 @@ public class usuarioDAO {
         }
     }
 }
+    
+    public boolean actualizarUsuario(Usuario usuario) {
+        PreparedStatement stmt = null;
+        try {
+            if (this.conexion == null || this.conexion.isClosed()) {
+                this.conectar();
+            }
+            String sql = "UPDATE usuario SET nombre = ?, apellido = ?, correo = ?, contrasena = ?, rol = ? WHERE id_usuario = ?";
+            stmt = this.conexion.prepareStatement(sql);
+            stmt.setString(1, usuario.getNombre());
+            stmt.setString(2, usuario.getApellido());
+            stmt.setString(3, usuario.getCorreo());
+            stmt.setString(4, usuario.getContrasena());
+            stmt.setString(5, usuario.getRol());
+            stmt.setInt(6, usuario.getId());
+
+            int filas = stmt.executeUpdate();
+            return filas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    /**
+ * Actualiza el estado de un usuario en la base de datos.
+ * 
+ * @param idUsuario ID del usuario a modificar.
+ * @param nuevoEstado Nuevo estado a asignar (1 = habilitado, 0 = deshabilitado).
+ * @return true si la actualización fue exitosa, false en caso contrario.
+ */
+    public boolean actualizarEstadoUsuario(int idUsuario, int nuevoEstado) {
+        PreparedStatement stmt = null;
+        try {
+            // Asegura conexión activa
+            if (this.conexion == null || this.conexion.isClosed()) {
+                this.conectar();
+            }
+            String sql = "UPDATE USUARIO SET ESTADO = ? WHERE ID_USUARIO = ?";
+            stmt = this.conexion.prepareStatement(sql);
+            stmt.setInt(1, nuevoEstado);
+            stmt.setInt(2, idUsuario);
+
+            int filas = stmt.executeUpdate();
+            return filas > 0;  // Retorna true si se actualizó al menos una fila
+        } catch (SQLException e) {
+            e.printStackTrace();
+        return false;
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     // Getters y Setters
     public String getUrl() {

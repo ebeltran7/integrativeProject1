@@ -164,7 +164,8 @@ public class frmlogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonIniciarSesionActionPerformed
-        // TODO add your handling code here:
+        // TODOal inicia sesion
+        
         String correo = txtusuario.getText();
         String contraseña = new String(txtcontrasena.getPassword());
         
@@ -182,11 +183,21 @@ public class frmlogin extends javax.swing.JFrame {
         Usuario usuario = dao.autenticar(correo, contraseña);
 
         if (usuario != null) {
-            JOptionPane.showMessageDialog(this, "Bienvenido " + usuario.getNombre() + " (" + usuario.getRol() + ")");
-            new frmroles(usuario.getRol()).setVisible(true);
+            String rol = usuario.getRol();
+            
+            JOptionPane.showMessageDialog(this, "Bienvenido " + usuario.getNombre() + " (" + rol + ")");
+            
+            if ( rol.equalsIgnoreCase("administrador")){
+                //abrimos ventana de administrador
+                new frmAdministrador().setVisible(true);
+            } else {
+                //Abrimos ventana para los otros roles (profe,estu,administrativo)
+                new frmroles(rol).setVisible(true);
+            }
+            
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Correo o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "correo o ocntraseña incorrectos ", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_botonIniciarSesionActionPerformed

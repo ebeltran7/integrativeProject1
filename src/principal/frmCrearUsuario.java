@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
  */
 public class frmCrearUsuario extends javax.swing.JDialog {
     private boolean guardado = false;
+    private boolean modoEdicion = false;  // bandera para distinguir creación o edición
+    private Usuario usuarioEditar;        // objeto usuario que se editará
     /**
      * Creates new form frmCrearUsuario
      */
@@ -20,15 +22,24 @@ public class frmCrearUsuario extends javax.swing.JDialog {
     }
     public frmCrearUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.setLocationRelativeTo(null);  // Centrar ventana
         initComponents();
     botonCancelar.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             botonCancelarActionPerformed(evt);
         }
     });
-
-        
     }
+    
+    // Constructor para modo edición
+    public frmCrearUsuario(java.awt.Frame parent, boolean modal, Usuario usuario) {
+        super(parent, modal);
+        initComponents();
+        this.usuarioEditar = usuario;
+        this.modoEdicion = true;
+        cargarDatosUsuario();
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,8 +77,19 @@ public class frmCrearUsuario extends javax.swing.JDialog {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Correo");
 
+        txtApellidoCU.setMinimumSize(new java.awt.Dimension(64, 20));
+
+        txtCorreoCU.setMinimumSize(new java.awt.Dimension(64, 20));
+        txtCorreoCU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCorreoCUActionPerformed(evt);
+            }
+        });
+
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Contraseña");
+
+        txtContrasenaCU.setMinimumSize(new java.awt.Dimension(64, 20));
 
         comboRolCU.setBackground(new java.awt.Color(0, 102, 153));
         comboRolCU.setForeground(new java.awt.Color(255, 255, 255));
@@ -102,62 +124,61 @@ public class frmCrearUsuario extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(99, 99, 99)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
-                            .addComponent(botonGuardar))
+                            .addComponent(botonGuardar)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botonCancelar)
                             .addComponent(txtnombreCU, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCorreoCU, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtApellidoCU, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtContrasenaCU, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtContrasenaCU, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(botonCancelar))))
+                    .addComponent(jLabel5))
                 .addContainerGap(74, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(comboRolCU, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(118, 118, 118))
+                .addGap(117, 117, 117))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5)
-                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(78, 78, 78)
+                                .addComponent(jLabel1))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtnombreCU, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72)
+                        .addComponent(txtnombreCU, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtApellidoCU, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(txtCorreoCU, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtApellidoCU, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCorreoCU, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))))
                 .addComponent(comboRolCU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtContrasenaCU, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(32, 32, 32)
+                    .addComponent(jLabel4)
+                    .addComponent(txtContrasenaCU, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonGuardar)
-                    .addComponent(botonCancelar))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(botonCancelar)
+                    .addComponent(botonGuardar))
+                .addGap(48, 48, 48))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -178,9 +199,31 @@ public class frmCrearUsuario extends javax.swing.JDialog {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_comboRolCUActionPerformed
+    private void cargarDatosUsuario() {
+        if (usuarioEditar != null) {
+            txtnombreCU.setText(usuarioEditar.getNombre());
+            txtApellidoCU.setText(usuarioEditar.getApellido());
+            txtCorreoCU.setText(usuarioEditar.getCorreo());
+            txtContrasenaCU.setText(usuarioEditar.getContrasena());
+            comboRolCU.setSelectedItem(usuarioEditar.getRol());
+        }
+    }
+    
+    public void setModoEdicion(boolean modo) {
+    this.modoEdicion = modo;
+}
+
+    public void cargarUsuario(Usuario usuario) {
+        this.usuarioEditar = usuario;
+        txtnombreCU.setText(usuario.getNombre());
+        txtApellidoCU.setText(usuario.getApellido());    
+        txtCorreoCU.setText(usuario.getCorreo());
+        comboRolCU.setSelectedItem(usuario.getRol());
+        txtContrasenaCU.setText(usuario.getContrasena()); // O dejar vacío para seguridad
+    }
+
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
-
 
         // Validamos campos obligatorios
         String nombre = txtnombreCU.getText().trim();
@@ -193,25 +236,36 @@ public class frmCrearUsuario extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        // Crear objeto Usuario
-        Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setNombre(nombre);
-        nuevoUsuario.setApellido(apellido);
-        nuevoUsuario.setCorreo(correo);
-        nuevoUsuario.setContrasena(contrasena);
-        nuevoUsuario.setRol(rol);
-
         // Guardar usuario con DAO
         usuarioDAO dao = new usuarioDAO();
-        boolean exito = dao.crearUsuario(nuevoUsuario);
+        boolean exito = false;
+        
+        if(modoEdicion){
+            //Modificar usuario existente
+            usuarioEditar.setNombre(nombre);
+            usuarioEditar.setApellido(apellido);
+            usuarioEditar.setCorreo(correo);
+            usuarioEditar.setContrasena(contrasena);
+            usuarioEditar.setRol(rol);
+            exito = dao.actualizarUsuario(usuarioEditar);
+            
+        } else {
+            // Crear objeto Usuario
+            Usuario nuevoUsuario = new Usuario();
+            nuevoUsuario.setNombre(nombre);
+            nuevoUsuario.setApellido(apellido);
+            nuevoUsuario.setCorreo(correo);
+            nuevoUsuario.setContrasena(contrasena);
+            nuevoUsuario.setRol(rol);
+            exito = dao.crearUsuario(nuevoUsuario);
+        }
 
         if (exito) {
-            JOptionPane.showMessageDialog(this, "Usuario creado exitosamente.");
+            JOptionPane.showMessageDialog(this, "Udi-ista se realizo exitosamente. ");
             guardado = true;
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(this, "Error al crear el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al guardar el usuario.", "Error", JOptionPane.ERROR_MESSAGE);
         }        
     }//GEN-LAST:event_botonGuardarActionPerformed
 
@@ -219,6 +273,10 @@ public class frmCrearUsuario extends javax.swing.JDialog {
         //cierre la venta sin guardar boton cancelar
         this.dispose();
     }//GEN-LAST:event_botonCancelarActionPerformed
+
+    private void txtCorreoCUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoCUActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCorreoCUActionPerformed
 
     /**
      * @param args the command line arguments
