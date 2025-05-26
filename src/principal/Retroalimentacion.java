@@ -11,15 +11,15 @@ import java.time.LocalDate;
  * @author NeyBg
  */
 public class Retroalimentacion {
-    private String id;
-    private String usuarioId;
+    private int id;
+    private int usuarioId;
     private String tipo; // sala o equipo
-    private String referenciaId; //ID de la sala o quipo al que se le refiere el dato.
+    private int referenciaId; //ID de la sala o quipo al que se le refiere el dato.
     private String comentario;
     private int calificacion; // 1 al 5
     private LocalDate fecha;
     
-        public Retroalimentacion(String id, String usuarioId, String tipo, String referenciaId, String comentario, int calificacion, LocalDate fecha){
+        public Retroalimentacion(int id, int usuarioId, String tipo, int referenciaId, String comentario, int calificacion, LocalDate fecha){
             this.id = id;
             this.usuarioId = usuarioId;
             this.tipo = tipo;
@@ -29,11 +29,11 @@ public class Retroalimentacion {
             this.fecha = fecha;
         }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setUsuarioId(String usuarioId) {
+    public void setUsuarioId(int usuarioId) {
         this.usuarioId = usuarioId;
     }
 
@@ -41,7 +41,7 @@ public class Retroalimentacion {
         this.tipo = tipo;
     }
 
-    public void setReferenciaId(String referenciaId) {
+    public void setReferenciaId(int referenciaId) {
         this.referenciaId = referenciaId;
     }
 
@@ -57,11 +57,9 @@ public class Retroalimentacion {
         this.fecha = fecha;
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public String getUsuarioId() {
+
+    public int getUsuarioId() {
         return usuarioId;
     }
 
@@ -69,7 +67,7 @@ public class Retroalimentacion {
         return tipo;
     }
 
-    public String getReferenciaId() {
+    public int getReferenciaId() {
         return referenciaId;
     }
 

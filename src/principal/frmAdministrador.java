@@ -33,6 +33,13 @@ public class frmAdministrador extends javax.swing.JFrame {
             }
         });
         
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
+
+        
         inicializarModeloTabla();
         cargarUsuarios();
     }
@@ -166,6 +173,11 @@ public class frmAdministrador extends javax.swing.JFrame {
         botonEliminar.setForeground(new java.awt.Color(0, 102, 153));
         botonEliminar.setText("Eliminar");
         botonEliminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
 
         botonDeshabilitar.setBackground(new java.awt.Color(255, 153, 51));
         botonDeshabilitar.setForeground(new java.awt.Color(0, 102, 153));
@@ -315,6 +327,33 @@ public class frmAdministrador extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al deshabilitar usuario.", "Error", JOptionPane.ERROR_MESSAGE);
         }    
     }//GEN-LAST:event_botonDeshabilitarActionPerformed
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        // agregamo metodo para eliminar
+        Usuario usuarioSeleccionado = obtenerUsuarioSeleccionado();
+        if (usuarioSeleccionado == null) {
+            return; // No hay usuario seleccionado
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "¿Está seguro que desea eliminar al usuario " + usuarioSeleccionado.getNombre() + "?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            usuarioDAO dao = new usuarioDAO();
+            boolean exito = dao.eliminarUsuario(usuarioSeleccionado.getId());
+
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "Usuario eliminado correctamente.");
+                cargarUsuarios(); // refresca tabla
+            } else {
+                JOptionPane.showMessageDialog(this, "Error al eliminar usuario.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        
+    }//GEN-LAST:event_botonEliminarActionPerformed
 
     /**
      * @param args the command line arguments

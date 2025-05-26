@@ -4,6 +4,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package principal;
+import principal.pruebas.conexion;
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.DriverManager;

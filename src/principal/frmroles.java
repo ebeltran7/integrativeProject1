@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
+import principal.frmequipo;
 
 /**
  *
@@ -214,7 +215,7 @@ public class frmroles extends javax.swing.JFrame {
     private void botonPrestamoEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPrestamoEquipoActionPerformed
             // TODO add your handling code here:
         botonPrestamoEquipo.addActionListener(e -> {
-            new frmequipo().setVisible(true);
+            new frmequipo(rolUsuario).setVisible(true);
             this.dispose(); //cierra la venta actual
         });
     }//GEN-LAST:event_botonPrestamoEquipoActionPerformed
@@ -300,7 +301,7 @@ private void initPanelNotificaciones() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmroles("estudiante").setVisible(true);
+                new frmequipo("estudiante").setVisible(true);
             }
         });
     }
@@ -316,6 +317,8 @@ private void initPanelNotificaciones() {
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
+
+
 
 
 

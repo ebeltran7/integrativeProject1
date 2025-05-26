@@ -4,8 +4,6 @@
  */
 package principal.pruebas;
 
-import principal.conexion;
-
 /**
  *
  * @author NeyBg
