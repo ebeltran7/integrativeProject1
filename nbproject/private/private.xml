@@ -15,11 +15,13 @@
         </group>
         <group>
             <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/frmlogin.java</file>
-            <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/Usuario.java</file>
-            <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/frmCrearUsuario.java</file>
-            <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/frmregistro.java</file>
             <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/usuarioDAO.java</file>
+            <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/frmCrearUsuario.java</file>
             <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/frmAdministrador.java</file>
+            <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/frmroles.java</file>
+            <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/frmequipo.java</file>
+            <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/frmSolicitudPrestamoEstudiante.java</file>
+            <file>file:/C:/Users/NeyBg/OneDrive/Documentos/NetBeansProjects/integrativeProject1/src/principal/EquipoDAO.java</file>
         </group>
     </open-files>
 </project-private>

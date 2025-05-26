@@ -20,6 +20,12 @@ public class frmAdministrador extends javax.swing.JFrame {
     public frmAdministrador() {
         initComponents();
         this.setLocationRelativeTo(null);  // Centrar ventana
+        // NUEVO: cargar solicitudes y configurar listener para selección en tabla solicitudes
+        cargarSolicitudesPendientes();
+        inicializarListenerTablaSolicitudes();
+        // Agregar listeners para botones aprobar/rechazar
+        btnAprobar.addActionListener(evt -> btnAprobarActionPerformed(evt));
+        btnRechazar.addActionListener(evt -> btnRechazarActionPerformed(evt));
         
         botonDeshabilitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +135,13 @@ public class frmAdministrador extends javax.swing.JFrame {
         botonDeshabilitar = new javax.swing.JButton();
         botonHabilitar = new javax.swing.JButton();
         botonModificar = new javax.swing.JButton();
+        panelSolicitudes = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtDetalleSolicitud = new javax.swing.JTextArea();
+        btnAprobar = new javax.swing.JButton();
+        btnRechazar = new javax.swing.JButton();
 
         botonCrear1.setBackground(new java.awt.Color(255, 153, 51));
         botonCrear1.setForeground(new java.awt.Color(0, 102, 153));
@@ -209,26 +222,81 @@ public class frmAdministrador extends javax.swing.JFrame {
             }
         });
 
+        panelSolicitudes.setBackground(new java.awt.Color(0, 102, 153));
+        panelSolicitudes.setLayout(null);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Usuario", "Fecha Solicitud", "Tipo", "Estado"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        panelSolicitudes.add(jScrollPane2);
+        jScrollPane2.setBounds(0, 0, 370, 150);
+
+        txtDetalleSolicitud.setBackground(new java.awt.Color(0, 102, 153));
+        txtDetalleSolicitud.setColumns(20);
+        txtDetalleSolicitud.setForeground(new java.awt.Color(255, 255, 255));
+        txtDetalleSolicitud.setRows(5);
+        jScrollPane3.setViewportView(txtDetalleSolicitud);
+
+        panelSolicitudes.add(jScrollPane3);
+        jScrollPane3.setBounds(370, 0, 234, 86);
+
+        btnAprobar.setBackground(new java.awt.Color(255, 153, 0));
+        btnAprobar.setForeground(new java.awt.Color(0, 102, 153));
+        btnAprobar.setText("Aceptar");
+        btnAprobar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnAprobar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAprobarActionPerformed(evt);
+            }
+        });
+        panelSolicitudes.add(btnAprobar);
+        btnAprobar.setBounds(390, 100, 45, 20);
+
+        btnRechazar.setBackground(new java.awt.Color(255, 153, 0));
+        btnRechazar.setForeground(new java.awt.Color(0, 102, 153));
+        btnRechazar.setText("Rechazar");
+        btnRechazar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnRechazar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRechazarActionPerformed(evt);
+            }
+        });
+        panelSolicitudes.add(btnRechazar);
+        btnRechazar.setBounds(490, 100, 80, 20);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonDeshabilitar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonHabilitar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonDeshabilitar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonHabilitar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(panelSolicitudes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(botonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,8 +307,11 @@ public class frmAdministrador extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addComponent(botonDeshabilitar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 263, Short.MAX_VALUE))
+                        .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelSolicitudes, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Gestion de Usuarios", jPanel1);
@@ -255,28 +326,15 @@ public class frmAdministrador extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCrearActionPerformed
-        // TODO add your handling code here:                                           
-        frmCrearUsuario dialog = new frmCrearUsuario(this, true);
-        dialog.setVisible(true);
-        if (dialog.isGuardado()) {
-            cargarUsuarios(); // Refresca la tabla con usuarios actualizados
-        }
-
-
-    }//GEN-LAST:event_botonCrearActionPerformed
-
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
         // TODO add your handling code here:
-        
+
         Usuario usuarioSeleccionado = obtenerUsuarioSeleccionado();
         if (usuarioSeleccionado == null) {
             return; // No hay selección, salir
@@ -290,7 +348,7 @@ public class frmAdministrador extends javax.swing.JFrame {
         if (dialog.isGuardado()) {
             cargarUsuarios();  // Recarga la tabla para mostrar cambios
         }
-            
+
     }//GEN-LAST:event_botonModificarActionPerformed
 
     // Evento para deshabilitar usuario seleccionado
@@ -325,7 +383,7 @@ public class frmAdministrador extends javax.swing.JFrame {
             cargarUsuarios();  // Refresca tabla
         } else {
             JOptionPane.showMessageDialog(this, "Error al deshabilitar usuario.", "Error", JOptionPane.ERROR_MESSAGE);
-        }    
+        }
     }//GEN-LAST:event_botonDeshabilitarActionPerformed
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
@@ -352,8 +410,100 @@ public class frmAdministrador extends javax.swing.JFrame {
             }
         }
 
-        
     }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void botonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCrearActionPerformed
+        // TODO add your handling code here:
+        frmCrearUsuario dialog = new frmCrearUsuario(this, true);
+        dialog.setVisible(true);
+        if (dialog.isGuardado()) {
+            cargarUsuarios(); // Refresca la tabla con usuarios actualizados
+        }
+
+    }//GEN-LAST:event_botonCrearActionPerformed
+
+    private void btnAprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAprobarActionPerformed
+        // TODO add your handling code here:
+        int fila = jTable1.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una solicitud para aprobar.");
+            return;
+        }
+        int idSolicitud = (int) jTable1.getValueAt(fila, 0);
+        cambiarEstadoSolicitud(idSolicitud, "APROBADO");
+    }//GEN-LAST:event_btnAprobarActionPerformed
+
+    private void btnRechazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRechazarActionPerformed
+        // TODO add your handling code here:
+        int fila = jTable1.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una solicitud para rechazar.");
+            return;
+        }
+        int idSolicitud = (int) jTable1.getValueAt(fila, 0);
+        cambiarEstadoSolicitud(idSolicitud, "RECHAZADO");
+    }//GEN-LAST:event_btnRechazarActionPerformed
+
+    private void cambiarEstadoSolicitud(int idSolicitud, String nuevoEstado) {
+        try {
+            usuarioDAO dao = new usuarioDAO();
+            if (dao.getConexion() == null || dao.getConexion().isClosed()) {
+                dao.conectar();
+            }
+            String sql = "UPDATE solicitud SET estado = ? WHERE id_solicitud = ?";
+            java.sql.PreparedStatement ps = dao.getConexion().prepareStatement(sql);
+            ps.setString(1, nuevoEstado);
+            ps.setInt(2, idSolicitud);
+            int filas = ps.executeUpdate();
+            ps.close();
+
+            if (filas > 0) {
+                JOptionPane.showMessageDialog(this, "Solicitud " + nuevoEstado.toLowerCase() + " correctamente.");
+                cargarSolicitudesPendientes();
+                txtDetalleSolicitud.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo actualizar la solicitud.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al actualizar estado: " + e.getMessage());
+        }
+}
+    
+    private void cargarSolicitudesPendientes() {
+        String sql = "SELECT s.id_solicitud, u.nombre || ' ' || u.apellido AS usuario, s.fecha_solicitud, s.tipo, s.estado " +
+                     "FROM solicitud s JOIN usuario u ON s.id_usuario = u.id_usuario " +
+                     "WHERE s.estado = 'PENDIENTE'";
+
+        try {
+            usuarioDAO dao = new usuarioDAO();
+            if (dao.getConexion() == null || dao.getConexion().isClosed()) {
+                dao.conectar();
+            }
+            java.sql.PreparedStatement ps = dao.getConexion().prepareStatement(sql);
+            java.sql.ResultSet rs = ps.executeQuery();
+
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // Limpiar tabla
+
+            while (rs.next()) {
+                Object[] fila = {
+                    rs.getInt("id_solicitud"),
+                    rs.getString("usuario"),
+                    rs.getDate("fecha_solicitud"),
+                    rs.getString("tipo"),
+                    rs.getString("estado")
+                };
+                model.addRow(fila);
+            }
+            rs.close();
+            ps.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al cargar solicitudes: " + e.getMessage());
+        }
+}
 
     /**
      * @param args the command line arguments
@@ -389,6 +539,44 @@ public class frmAdministrador extends javax.swing.JFrame {
             }
         });
     }
+private void inicializarListenerTablaSolicitudes() {
+    jTable1.getSelectionModel().addListSelectionListener(event -> {
+        if (!event.getValueIsAdjusting()) {
+            int fila = jTable1.getSelectedRow();
+            if (fila >= 0) {
+                int idSolicitud = (int) jTable1.getValueAt(fila, 0);
+                mostrarDetallesSolicitud(idSolicitud);
+            }
+        }
+    });
+}
+
+private void mostrarDetallesSolicitud(int idSolicitud) {
+    try {
+        usuarioDAO dao = new usuarioDAO();
+        if (dao.getConexion() == null || dao.getConexion().isClosed()) {
+            dao.conectar();
+        }
+
+        // Consulta ejemplo para obtener comentarios (ajusta según estructura BD)
+        String sql = "SELECT comentario FROM solicitud WHERE id_solicitud = ?";
+        java.sql.PreparedStatement ps = dao.getConexion().prepareStatement(sql);
+        ps.setInt(1, idSolicitud);
+        java.sql.ResultSet rs = ps.executeQuery();
+
+        String comentario = "";
+        if (rs.next()) {
+            comentario = rs.getString("comentario");
+        }
+        txtDetalleSolicitud.setText("Comentario:\n" + comentario);
+
+        rs.close();
+        ps.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al obtener detalles: " + e.getMessage());
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCrear;
@@ -397,10 +585,17 @@ public class frmAdministrador extends javax.swing.JFrame {
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonHabilitar;
     private javax.swing.JButton botonModificar;
+    private javax.swing.JButton btnAprobar;
+    private javax.swing.JButton btnRechazar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JPanel panelSolicitudes;
     private javax.swing.JTable tblUsuarios;
+    private javax.swing.JTextArea txtDetalleSolicitud;
     // End of variables declaration//GEN-END:variables
 }
 

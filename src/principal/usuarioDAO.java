@@ -3,11 +3,16 @@ package principal;
 // Importamos las librerías necesarias para la conexión a la base de datos y manejo de errores
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import principal.Usuario;
 import javax.swing.JOptionPane;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class usuarioDAO {
     // Dirección para conectarse a la base de datos Oracle local
@@ -33,23 +38,23 @@ public class usuarioDAO {
     // Este método abre la conexión con la base de datos Oracle
     public void conectar() {
         try {
+            // Verifica si la conexión ya está abierta, si está cerrada o no existe, entonces la abre.
+            if (this.conexion != null && !this.conexion.isClosed()) {
+                return;  // Si ya está abierta, no hacemos nada
+            }
+
             // Cargamos el driver de Oracle para que Java sepa cómo conectarse
             Class.forName("oracle.jdbc.driver.OracleDriver");
 
-            // Imprime datos de conexión en consola (contraseña oculta)
-            System.out.println("=== Intentando conexión ===");
-            System.out.println("URL: " + url);
-            System.out.println("Usuario: " + usuario);
-            System.out.println("Contraseña: " + contrasena.replaceAll(".", "*"));
-
-            // Aquí se realiza la conexión real
+            // Establece la conexión real con la base de datos
             this.conexion = DriverManager.getConnection(url, usuario, contrasena);
             System.out.println("¡CONEXIÓN EXITOSA!");
+
         } catch (ClassNotFoundException e) {
-            // Esto sale si falta el driver de Oracle en el proyecto
+            // Si no se encuentra el driver de Oracle, muestra un mensaje de error
             System.err.println("Error: Driver Oracle no encontrado. ¿Tienes el jar JDBC?");
         } catch (SQLException e) {
-            // Aquí muestra detalles si la conexión falla por otro motivo
+            // Si ocurre un error de SQL, muestra un mensaje detallado
             System.err.println("Error SQL Detallado:");
             e.printStackTrace();
             JOptionPane.showMessageDialog(null,
@@ -57,6 +62,7 @@ public class usuarioDAO {
                 "Error Oracle", JOptionPane.ERROR_MESSAGE);
         }
     }
+   
 
     // Este método cierra la conexión si está abierta, para liberar recursos
     public void cerrarConexion() {
@@ -265,6 +271,113 @@ public class usuarioDAO {
     }
 
 
+    
+    public int insertarSolicitud(int idUsuario, String tipoSolicitud, java.util.Date fechaSolicitud, String estado) throws SQLException {
+        String sql = "INSERT INTO solicitud (id_solicitud, fecha_solicitud, estado, tipo, id_usuario) "
+                   + "VALUES (solicitud_seq.NEXTVAL, ?, ?, ?, ?)";
+
+        String[] generatedColumns = {"ID_SOLICITUD"};
+        int idGenerado = -1;
+
+        if (this.conexion == null || this.conexion.isClosed()) {
+            this.conectar();
+        }
+
+        try (PreparedStatement ps = this.conexion.prepareStatement(sql, generatedColumns)) {
+            java.sql.Date sqlDate = new java.sql.Date(fechaSolicitud.getTime());
+            ps.setDate(1, sqlDate);
+            ps.setString(2, estado);
+            ps.setString(3, tipoSolicitud);
+            ps.setInt(4, idUsuario);
+
+            ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) {
+                    idGenerado = rs.getInt(1);
+                }
+            }
+        }
+        return idGenerado;
+    }
+   
+    public int insertarSolicitudConEquipos(int idUsuario, String tipoSolicitud, java.util.Date fechaSolicitud,
+                                       String estado, List<Integer> listaIdEquipos) throws SQLException {
+        int idSolicitud = -1;
+        // Obtener la conexión activa usando getConexion()
+        usuarioDAO dao = new usuarioDAO();
+        Connection conexion = dao.getConexion(); // Aquí obtenemos la conexión activa
+        if (this.conexion == null || this.conexion.isClosed()) {
+            this.conectar();
+        }
+
+        try {
+            // Iniciar transacción
+            conexion.setAutoCommit(false);
+
+            // Insertar solicitud y obtener id generado
+            String sqlSolicitud = "INSERT INTO solicitud (id_solicitud, fecha_solicitud, estado, tipo, id_usuario) "
+                    + "VALUES (solicitud_seq.NEXTVAL, ?, ?, ?, ?)";
+
+            String[] generatedColumns = {"ID_SOLICITUD"};
+            try (PreparedStatement psSolicitud = conexion.prepareStatement(sqlSolicitud, generatedColumns)) {
+                java.sql.Date sqlDate = new java.sql.Date(fechaSolicitud.getTime());
+                psSolicitud.setDate(1, sqlDate);
+                psSolicitud.setString(2, estado);
+                psSolicitud.setString(3, tipoSolicitud);
+                psSolicitud.setInt(4, idUsuario);
+                psSolicitud.executeUpdate();
+
+                try (ResultSet rs = psSolicitud.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        idSolicitud = rs.getInt(1);
+                    } else {
+                        throw new SQLException("No se pudo obtener el ID de la solicitud.");
+                    }
+                }
+            }
+
+            // Insertar cada equipo asociado
+            String sqlEquipo = "INSERT INTO solicitud_equipo (id_solicitud_equipo, id_solicitud, id_equipo, cantidad) "
+                    + "VALUES (solicitud_equipo_seq.NEXTVAL, ?, ?, 1)";
+
+            try (PreparedStatement psEquipo = conexion.prepareStatement(sqlEquipo)) {
+                for (Integer idEquipo : listaIdEquipos) {
+                    psEquipo.setInt(1, idSolicitud);
+                    psEquipo.setInt(2, idEquipo);
+                    psEquipo.addBatch();
+                }
+                psEquipo.executeBatch();
+            }
+
+            // Confirmar transacción
+            conexion.commit();
+
+        } catch (SQLException ex) {
+            // Si ocurre error, hacer rollback y mostrar error
+            if (conexion != null) {
+                try {
+                    conexion.rollback();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            throw ex;
+        } finally {
+            if (conexion != null) {
+                try {
+                    conexion.setAutoCommit(true);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return idSolicitud;
+    }
+
+
+
     // Métodos para obtener y cambiar los datos de conexión (no tan usados, pero para configurar)
     public String getUrl() {
         return url;
@@ -291,6 +404,9 @@ public class usuarioDAO {
     }
 
     public Connection getConexion() {
+        if (conexion == null){
+            conectar();
+        }
         return conexion;
     }
 

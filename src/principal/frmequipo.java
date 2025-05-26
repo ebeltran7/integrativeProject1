@@ -22,6 +22,7 @@ public class frmequipo extends javax.swing.JFrame {
     public frmequipo(String rolUsuario) {
         this.rolUsuario = rolUsuario;
         initComponents();
+        setLocationRelativeTo(null);  // Centra la ventana en la pantalla
         cargarComponentes();
         cargarEquiposSegunRol();
 
@@ -118,6 +119,7 @@ public class frmequipo extends javax.swing.JFrame {
         botonMicrofono = new javax.swing.JButton();
         botonCabledeRed = new javax.swing.JButton();
         txtequipos = new javax.swing.JLabel();
+        jButtonVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EQUIPOS");
@@ -157,16 +159,17 @@ public class frmequipo extends javax.swing.JFrame {
         txtequipos.setForeground(new java.awt.Color(255, 255, 255));
         txtequipos.setText("EQUIPOS");
 
+        jButtonVolver.setText("atras");
+        jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botonMicrofono, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(botonHdmi, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(136, 136, 136))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -183,6 +186,17 @@ public class frmequipo extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addComponent(botonCabledeRed, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(botonMicrofono, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addComponent(botonHdmi, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(136, 136, 136))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonVolver)
+                        .addGap(25, 25, 25))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +214,9 @@ public class frmequipo extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botonHdmi, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonMicrofono, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 109, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addComponent(jButtonVolver)
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -224,6 +240,13 @@ public class frmequipo extends javax.swing.JFrame {
         frmSolicitudPrestamoEstudiante frmSolicitud = new frmSolicitudPrestamoEstudiante();
         frmSolicitud.setVisible(true);
     }//GEN-LAST:event_botonPortatilActionPerformed
+
+    private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
+        //Abrir frmroles, pasando el rol actual si es necesario
+        frmroles frm = new frmroles(this.rolUsuario);
+                frm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonVolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,6 +285,7 @@ public class frmequipo extends javax.swing.JFrame {
     private javax.swing.JButton botonHdmi;
     private javax.swing.JButton botonMicrofono;
     private javax.swing.JButton botonPortatil;
+    private javax.swing.JButton jButtonVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel txtequipos;

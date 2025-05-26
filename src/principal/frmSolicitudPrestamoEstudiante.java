@@ -4,7 +4,15 @@
  */
 package principal;
 
+
+import java.util.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  *
  * @author NeyBg
@@ -13,7 +21,8 @@ public class frmSolicitudPrestamoEstudiante extends javax.swing.JFrame {
     private String equipoSeleccionado = null;
     private String rolUsuario;
     private String tipoEquipo;
-
+    private int idUsuarioActual;
+    
     /**
      * Creates new form frmSolicitudPrestamoEstudiante
      */
@@ -23,6 +32,31 @@ public class frmSolicitudPrestamoEstudiante extends javax.swing.JFrame {
         this.tipoEquipo = tipoEquipo;
         setLocationRelativeTo(null);  // Centra la ventana en la pantalla
     // otras inicializaciones...
+    }
+    public frmSolicitudPrestamoEstudiante(int idUsuario) {
+        initComponents();
+        this.idUsuarioActual = idUsuario;
+        setLocationRelativeTo(null);
+    }
+
+    private int buscarIdEquipoPorNombre(String nombre) throws SQLException {
+        int idEquipo = -1;
+        String sql = "SELECT ID_EQUIPO FROM EQUIPO WHERE NOMBRE = ?";
+
+        usuarioDAO dao = new usuarioDAO();
+        if (dao.getConexion() == null || dao.getConexion().isClosed()) {
+            dao.conectar();
+        }
+
+        try (PreparedStatement ps = dao.getConexion().prepareStatement(sql)) {
+            ps.setString(1, nombre);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    idEquipo = rs.getInt("ID_EQUIPO");
+                }
+            }
+        }
+        return idEquipo;
     }
 
 
@@ -104,7 +138,7 @@ public class frmSolicitudPrestamoEstudiante extends javax.swing.JFrame {
 
         jSpinnerFecha.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(1748239813604L), null, java.util.Calendar.DAY_OF_MONTH));
 
-        jButtonvolver.setText("volver");
+        jButtonvolver.setText("atras");
         jButtonvolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonvolverActionPerformed(evt);
@@ -208,19 +242,45 @@ public class frmSolicitudPrestamoEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButtonenviarSolicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonenviarSolicitudActionPerformed
-        //Programar el botón enviar para validar y procesar la solicitud
+         // Validar que se haya seleccionado un equipo
         if (equipoSeleccionado == null) {
             JOptionPane.showMessageDialog(this, "Por favor, selecciona un equipo antes de enviar la solicitud.");
             return;
         }
         String comentario = jTextArea1.getText().trim();
-    
-        // Aquí pondrías la lógica para guardar la solicitud en BD y enviar notificación
-    
-        JOptionPane.showMessageDialog(this, "Solicitud enviada para el equipo: " + equipoSeleccionado 
-            + "\nComentario: " + comentario);
-        this.dispose(); // Cierra el formulario
-    
+
+        try {
+            usuarioDAO dao = new usuarioDAO();
+            Date fechaSolicitud = (Date) jSpinnerFecha.getValue();
+            // Verificar que el usuario existe antes de proceder
+            String sqlVerificarUsuario = "SELECT COUNT(*) FROM usuario WHERE id_usuario = ?";
+            try (PreparedStatement ps = dao.getConexion().prepareStatement(sqlVerificarUsuario)) {
+                ps.setInt(1, idUsuarioActual);  // Aquí usas idUsuarioActual que es el id del usuario actual
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        JOptionPane.showMessageDialog(this, "Usuario no encontrado");
+                        return;  // Detener la ejecución si el usuario no existe
+                    }
+                }
+            }
+                // Buscar ID del equipo seleccionado
+            int idEquipo = buscarIdEquipoPorNombre(equipoSeleccionado);
+
+            // Crear lista de equipos solicitados (en este caso solo uno)
+            List<Integer> equiposSolicitados = new ArrayList<>();
+            equiposSolicitados.add(idEquipo);
+
+            // Insertar solicitud junto con los equipos en una sola transacción
+            int idSolicitud = dao.insertarSolicitudConEquipos(idUsuarioActual, "PRESTAMO_EQUIPO", fechaSolicitud, "PENDIENTE", equiposSolicitados);
+
+            JOptionPane.showMessageDialog(this, "Solicitud enviada para el equipo: " + equipoSeleccionado
+                    + "\nComentario: " + comentario);
+            this.dispose(); // Cierra el formulario
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al enviar la solicitud: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButtonenviarSolicitudActionPerformed
 
     private void jButtonvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonvolverActionPerformed
@@ -293,5 +353,4 @@ public class frmSolicitudPrestamoEstudiante extends javax.swing.JFrame {
 
 
 
-
-
+    

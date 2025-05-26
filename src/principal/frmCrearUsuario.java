@@ -22,13 +22,15 @@ public class frmCrearUsuario extends javax.swing.JDialog {
     }
     public frmCrearUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        this.setLocationRelativeTo(null);  // Centrar ventana
+
+    // otras inicializaciones...
         initComponents();
-    botonCancelar.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botonCancelarActionPerformed(evt);
-        }
-    });
+        setLocationRelativeTo(null);  // Centra la ventana en la pantalla
+        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCancelarActionPerformed(evt);
+            }
+        });
     }
     
     // Constructor para modo edición
