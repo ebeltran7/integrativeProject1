@@ -143,7 +143,7 @@ public class frmCrearUsuario extends javax.swing.JDialog {
                                 .addGap(15, 15, 15)
                                 .addComponent(botonCancelar))))
                     .addComponent(jLabel5))
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(comboRolCU, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)

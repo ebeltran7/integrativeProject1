@@ -15,7 +15,7 @@ public class Usuario {
     private String correo;
     private String contrasena;
     private String rol; // rol le llamamos al estudiante, al profesor o el administrativo.
-    
+    private int estado;
     public Usuario(){
     
     }
@@ -28,6 +28,10 @@ public class Usuario {
         this.contrasena = contrasena;
         this.rol = rol;
                                 
+    }
+
+    public int getEstado() {
+        return estado;
     }
     
     //geters 
@@ -59,6 +63,10 @@ public class Usuario {
             
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
     
     public void setNombre(String nombre) {

@@ -8,14 +8,14 @@ package principal;
  *
  * @author NeyBg
  */
-public class sala {
+public class Sala {
     
     private int id;
     private String nombre;
     private int capacidad;
-    private String softwareRequerido; //tipo de sala de computo con ciertas softwares o packetes.
+    private String softwareRequerido; //tipo de Sala de computo con ciertas softwares o packetes.
     
-    public sala (int id, String nombre, int capacidad, String softwareRequerido) {
+    public Sala (int id, String nombre, int capacidad, String softwareRequerido) {
         this.id = id;
         this.nombre = nombre;
         this.capacidad = capacidad;

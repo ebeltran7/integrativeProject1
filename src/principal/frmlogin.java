@@ -6,6 +6,10 @@
  */
 package principal;
 import javax.swing.JOptionPane;
+import principal.Usuario;
+import principal.frmAdministrador;
+import principal.frmroles;
+import principal.usuarioDAO;
 
 
 /**
@@ -189,7 +193,8 @@ public class frmlogin extends javax.swing.JFrame {
             
             if ( rol.equalsIgnoreCase("administrador")){
                 //abrimos ventana de administrador
-                new frmAdministrador().setVisible(true);
+                frmAdministrador admin = new frmAdministrador(usuario);
+                admin.setVisible(true);
             } else {
                 //Abrimos ventana para los otros roles (profe,estu,administrativo)
                 new frmroles(rol).setVisible(true);

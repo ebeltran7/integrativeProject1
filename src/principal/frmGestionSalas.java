@@ -8,11 +8,11 @@ package principal;
  *
  * @author NeyBg
  */
-public class frmsala extends javax.swing.JFrame {
+public class frmGestionSalas extends javax.swing.JFrame {
     private String rolUsuario; // Variable para almacenar el rol
 
         // Constructor modificado
-    public frmsala(String rolUsuario) {
+    public frmGestionSalas(String rolUsuario) {
         this.rolUsuario = rolUsuario; // Guardamos el rol
         initComponents();
         setLocationRelativeTo(null); // Centrar ventana
@@ -22,7 +22,7 @@ public class frmsala extends javax.swing.JFrame {
     /**
      * Creates new form frmsala
      */
-    public frmsala() {
+    public frmGestionSalas() {
         initComponents();
     }
 
@@ -38,11 +38,11 @@ public class frmsala extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtequipos1 = new javax.swing.JLabel();
-        botonsala1 = new javax.swing.JButton();
-        botonsala2 = new javax.swing.JButton();
-        botonsala3 = new javax.swing.JButton();
-        botonsala4 = new javax.swing.JButton();
-        botonsala5 = new javax.swing.JButton();
+        botonSalaDisenoGrafico = new javax.swing.JButton();
+        botonSalaProgramacion = new javax.swing.JButton();
+        botonSalaEdicionVideo = new javax.swing.JButton();
+        botonSalaMultimedia = new javax.swing.JButton();
+        botonSalaImformaticaGeneral = new javax.swing.JButton();
         botonatras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -56,30 +56,35 @@ public class frmsala extends javax.swing.JFrame {
         txtequipos1.setForeground(new java.awt.Color(255, 255, 255));
         txtequipos1.setText("SALAS");
 
-        botonsala1.setBackground(new java.awt.Color(0, 102, 153));
-        botonsala1.setForeground(new java.awt.Color(255, 255, 255));
-        botonsala1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sala-de-control0.png"))); // NOI18N
-        botonsala1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SALA_UNO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        botonSalaDisenoGrafico.setBackground(new java.awt.Color(0, 102, 153));
+        botonSalaDisenoGrafico.setForeground(new java.awt.Color(255, 255, 255));
+        botonSalaDisenoGrafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sala-de-control0.png"))); // NOI18N
+        botonSalaDisenoGrafico.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Diseño Grafico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        botonSalaDisenoGrafico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonSalaDisenoGraficoActionPerformed(evt);
+            }
+        });
 
-        botonsala2.setBackground(new java.awt.Color(0, 102, 153));
-        botonsala2.setForeground(new java.awt.Color(255, 255, 255));
-        botonsala2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sala-de-control1.png"))); // NOI18N
-        botonsala2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SALA_DOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        botonSalaProgramacion.setBackground(new java.awt.Color(0, 102, 153));
+        botonSalaProgramacion.setForeground(new java.awt.Color(255, 255, 255));
+        botonSalaProgramacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sala-de-control1.png"))); // NOI18N
+        botonSalaProgramacion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sala de Programacion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        botonsala3.setBackground(new java.awt.Color(0, 102, 153));
-        botonsala3.setForeground(new java.awt.Color(255, 255, 255));
-        botonsala3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sala-de-control2.png"))); // NOI18N
-        botonsala3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SALA_TRES", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        botonSalaEdicionVideo.setBackground(new java.awt.Color(0, 102, 153));
+        botonSalaEdicionVideo.setForeground(new java.awt.Color(255, 255, 255));
+        botonSalaEdicionVideo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sala-de-control2.png"))); // NOI18N
+        botonSalaEdicionVideo.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Edicion de Video", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        botonsala4.setBackground(new java.awt.Color(0, 102, 153));
-        botonsala4.setForeground(new java.awt.Color(255, 255, 255));
-        botonsala4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/saladecontrol3.png"))); // NOI18N
-        botonsala4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SALA_CUATRO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        botonSalaMultimedia.setBackground(new java.awt.Color(0, 102, 153));
+        botonSalaMultimedia.setForeground(new java.awt.Color(255, 255, 255));
+        botonSalaMultimedia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/saladecontrol3.png"))); // NOI18N
+        botonSalaMultimedia.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sala Multimedia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        botonsala5.setBackground(new java.awt.Color(0, 102, 153));
-        botonsala5.setForeground(new java.awt.Color(255, 255, 255));
-        botonsala5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sala-de-control4.png"))); // NOI18N
-        botonsala5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "SALA_CINCO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        botonSalaImformaticaGeneral.setBackground(new java.awt.Color(0, 102, 153));
+        botonSalaImformaticaGeneral.setForeground(new java.awt.Color(255, 255, 255));
+        botonSalaImformaticaGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/sala-de-control4.png"))); // NOI18N
+        botonSalaImformaticaGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Informatica General", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
 
         botonatras.setBackground(new java.awt.Color(0, 102, 153));
         botonatras.setForeground(new java.awt.Color(255, 255, 255));
@@ -96,29 +101,24 @@ public class frmsala extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtequipos1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonatras)
-                        .addGap(39, 39, 39))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtequipos1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonatras))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(botonsala2)
+                        .addGap(48, 48, 48)
+                        .addComponent(botonSalaEdicionVideo)
+                        .addGap(30, 30, 30)
+                        .addComponent(botonSalaMultimedia)
                         .addGap(18, 18, 18)
-                        .addComponent(botonsala4)
-                        .addGap(18, 18, 18)
-                        .addComponent(botonsala5))
+                        .addComponent(botonSalaImformaticaGeneral))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(74, 74, 74)
-                        .addComponent(botonsala1)
-                        .addGap(42, 42, 42)
-                        .addComponent(botonsala3)))
+                        .addGap(134, 134, 134)
+                        .addComponent(botonSalaDisenoGrafico)
+                        .addGap(47, 47, 47)
+                        .addComponent(botonSalaProgramacion)))
                 .addContainerGap(90, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -131,14 +131,14 @@ public class frmsala extends javax.swing.JFrame {
                         .addComponent(txtequipos1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(82, 82, 82)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonsala1)
-                    .addComponent(botonsala3))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botonSalaDisenoGrafico)
+                    .addComponent(botonSalaProgramacion))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonsala4)
-                    .addComponent(botonsala5)
-                    .addComponent(botonsala2))
+                    .addComponent(botonSalaMultimedia)
+                    .addComponent(botonSalaImformaticaGeneral)
+                    .addComponent(botonSalaEdicionVideo))
                 .addGap(0, 172, Short.MAX_VALUE))
         );
 
@@ -164,6 +164,10 @@ public class frmsala extends javax.swing.JFrame {
     });    
     }//GEN-LAST:event_botonatrasActionPerformed
 
+    private void botonSalaDisenoGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSalaDisenoGraficoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonSalaDisenoGraficoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -181,31 +185,32 @@ public class frmsala extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmsala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmGestionSalas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmsala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmGestionSalas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmsala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmGestionSalas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmsala.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmGestionSalas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmsala().setVisible(true);
+                new frmGestionSalas().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonSalaDisenoGrafico;
+    private javax.swing.JButton botonSalaEdicionVideo;
+    private javax.swing.JButton botonSalaImformaticaGeneral;
+    private javax.swing.JButton botonSalaMultimedia;
+    private javax.swing.JButton botonSalaProgramacion;
     private javax.swing.JButton botonatras;
-    private javax.swing.JButton botonsala1;
-    private javax.swing.JButton botonsala2;
-    private javax.swing.JButton botonsala3;
-    private javax.swing.JButton botonsala4;
-    private javax.swing.JButton botonsala5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel txtequipos1;

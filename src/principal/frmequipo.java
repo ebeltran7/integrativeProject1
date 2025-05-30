@@ -236,9 +236,7 @@ public class frmequipo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonPortatilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPortatilActionPerformed
-        // Abrir el formulario de solicitud para el préstamo del equipo portátil
-        frmSolicitudPrestamoEstudiante frmSolicitud = new frmSolicitudPrestamoEstudiante();
-        frmSolicitud.setVisible(true);
+
     }//GEN-LAST:event_botonPortatilActionPerformed
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed

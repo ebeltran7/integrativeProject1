@@ -35,6 +35,37 @@ public class usuarioDAO {
         this.contrasena = contrasena;
     }
 
+    public List<Usuario> obtenerTodosUsuarios() {
+    List<Usuario> usuarios = new ArrayList<>();
+    String sql = "SELECT ID_USUARIO, NOMBRE, CORREO, ROL, ESTADO FROM USUARIO ORDER BY ID_USUARIO";
+
+    try {
+        if (getConexion() == null || getConexion().isClosed()) {
+            conectar();
+        }
+        PreparedStatement ps = getConexion().prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Usuario usuario = new Usuario();
+            usuario.setId(rs.getInt("ID_USUARIO"));
+            usuario.setNombre(rs.getString("NOMBRE"));
+            usuario.setCorreo(rs.getString("CORREO"));
+            usuario.setRol(rs.getString("ROL"));
+            usuario.setEstado(rs.getInt("ESTADO"));
+            usuarios.add(usuario);
+        }
+
+        rs.close();
+        ps.close();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return usuarios;
+}
+
+    
     // Este método abre la conexión con la base de datos Oracle
     public void conectar() {
         try {

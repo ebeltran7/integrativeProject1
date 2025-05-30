@@ -224,7 +224,7 @@ public class frmroles extends javax.swing.JFrame {
         // TODO add your handling code here:
         botonReservaSala.addActionListener(e -> {
             if (!rolUsuario.equalsIgnoreCase("estudiante")) {
-                new frmsala(rolUsuario).setVisible(true);
+                new frmGestionSalas(rolUsuario).setVisible(true);
                 this.dispose();
             }
         });
