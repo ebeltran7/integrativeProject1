@@ -1,0 +1,92 @@
+[33mcommit 308ff37fb9b45145cbd13b50cda96a8d26dc3a59[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: FerneyBG <ebeltran7di.edu.co>
+Date:   Sun May 11 01:54:59 2025 -0500
+
+    agregamos la conexion exitosa de registro modificando la classfrmregistro y las class usuarioDAO con la base de datos local oracle sqlplus.
+
+[33mcommit 68fa144f1df7447370e362a29026e9cce211eedc[m
+Author: FerneyBG <ebeltran7di.edu.co>
+Date:   Sat May 10 23:44:55 2025 -0500
+
+    Agregando ajustes para lograr la conexion a la base de datos
+
+[33mcommit e01da665b31b89f5cf44ad27213c409ec24fad14[m
+Merge: 3340ee5 a783cbb
+Author: FerneyBG <ebeltran7di.edu.co>
+Date:   Sat May 10 20:59:20 2025 -0500
+
+    Merge branch 'main' of https://github.com/ebeltran7/integrativeProject1
+    b
+
+[33mcommit 3340ee5377eb5c9f78108281e7eda69b9eac3025[m
+Author: FerneyBG <ebeltran7di.edu.co>
+Date:   Sat May 10 20:56:50 2025 -0500
+
+    se agrega metodos nuevos a las clases pensando en el avance numero 3 y en la base de datos
+
+[33mcommit 02a7d4f572a3a89b0f00fb5170f6b497d7aefef4[m
+Author: FerneyBG <ebeltran7di.edu.co>
+Date:   Tue May 6 01:25:03 2025 -0500
+
+    se agrega un nuevo metrodo en classEquipo llamado accesrio y  otro metodo para cambiar estado de equipo a, prestado siponible o en mantenimiento
+
+[33mcommit 1f1e6c68f97d48be59b0e5e93b7e81e3fb01de5a[m
+Author: FerneyBG <ebeltran7di.edu.co>
+Date:   Tue May 6 01:18:01 2025 -0500
+
+    se agrega a la classEquipo un nuevo atributo y un nuevo metodo que es accesorio, y otro metodo para cambiar el estado del equipo.
+
+[33mcommit a783cbb2e7d957e9394bb929af54e76468bf9cde[m
+Author: FerneyBG <148933757+ebeltran7@users.noreply.github.com>
+Date:   Mon May 5 13:40:57 2025 -0500
+
+    Update Neybg.md
+
+[33mcommit b562e0b7176f58861fcccc87987d1776b989229d[m
+Author: FerneyBG <148933757+ebeltran7@users.noreply.github.com>
+Date:   Mon May 5 13:33:29 2025 -0500
+
+    Update README.md
+
+[33mcommit 9555627055d2d03577163b663a4b61108c8d7a34[m
+Author: FerneyBG <148933757+ebeltran7@users.noreply.github.com>
+Date:   Mon May 5 13:27:54 2025 -0500
+
+    Update 1project.md
+    
+    La vida te va enseñando los profesores te guian y tu pones el rumbo
+
+[33mcommit e4991a7be72a4b0b9346476e830cf647541c8cf3[m
+Author: FerneyBG <148933757+ebeltran7@users.noreply.github.com>
+Date:   Mon May 5 13:14:51 2025 -0500
+
+    Create README.md
+    
+    INTRODUCCIÓN
+    
+    Y es debido a los años de reestructuración que ha vivido la universidad, que actualmente ve la necesidad de adquirir un software que permita la gestión de préstamos de salas, equipos de cómputo y equipos audiovisuales para que los docentes y administrativos puedan dar uso de los mismo, es por ello que se propone un software que ayude en la asignación de los equipos audiovisuales y las salas de informática, adicional esto ayudara a que el proceso sea más rápido y eficiente dando un salto a la digitalización.
+
+[33mcommit 70267d9f3d4b031aa0519759aec9863b7cbb9e12[m
+Author: FerneyBG <ebeltran7di.edu.co>
+Date:   Mon May 5 12:54:12 2025 -0500
+
+    Ya los profes pueden hacer todo :D
+    - Se bloqueaba reservar sala préstamo de equipo se mamaba, que los profes no podían reservar salas, ya quedó
+    - Los estudiantes siguen sin poder reservar (como debe ser).
+    - El rol ya no se pierde al cambiar de ventana.
+    - Probé con mis cuentas de prueba y todo melo.
+
+[33mcommit d7e4ee06e54973538a5c08ef073d931b21b84906[m
+Author: FerneyBG <ebeltran7di.edu.co>
+Date:   Mon May 5 03:52:24 2025 -0500
+
+    se implementa control de permisos por rol
+    - Configuración de botones según rol (Estudiante, Profesor, Administrativo, Administrador)
+    - falta Corrección de errores en lógica de habilitación de componentes
+    - Adición de panel de notificaciones desplegabl, unirlo cuando inicie sesion
+
+[33mcommit 43d9afe04421b522e9d57f3ae49f28b0679e47ac[m
+Author: FerneyBG <ebeltran7@udi.edu.co>
+Date:   Mon May 5 00:54:13 2025 -0500
+
+    Se agrega el proyecto
